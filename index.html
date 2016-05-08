@@ -1,0 +1,315 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>syntaxcon 2016 - electron</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/moon.css">
+		<style media="screen">
+			.atom-green {
+				background-color: #61B080;
+			}
+			.electron-blue {
+				background-color: #69C2C6;
+			}
+			.os-yellow {
+				background-color: #505050;
+			}
+			.box-50 {
+				box-sizing: border-box;
+				display: inline-block;
+				vertical-align: top;
+				width: 45%;
+				border-radius: 10px;
+				color: white;
+				/*margin: 20px 0 !important;*/
+				padding: 20px !important;
+			}
+			.box {
+				display: block;
+				width: 100%;
+				border-radius: 10px;
+				color: white;
+				margin: 20px 0 !important;
+				padding: 20px !important;
+			}
+			.blue {
+				color: #000;
+				background-color: #3F89EC;
+			}
+			.green {
+				background-color: #4EBA0F;
+			}
+		</style>
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown>
+					<script type="text/template">
+			        # When 2 Worlds Collide, Building Desktop Apps with Electron
+							// Syntax Code & Craft 2016 - Charleston, SC
+
+			    </script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						# About
+
+						## Calvin Webster
+						 - Lead Instructor @ <img style="vertical-align:middle;display:inline;width:150px;" data-src="images/TIIY-Logo-500px-white.png" class="plain">
+						 - <3 javascript
+						 - <3 teaching
+						 - <3 community
+					</script>
+
+
+				</section>
+				<section data-background="images/electronbg.png"></section>
+				<section data-markdown>
+					<script type="text/template">
+						## Some History
+
+ 						- nodewebkit/nw.js
+							- roger wang /rogerwang
+							- cheng zhao /czbenz
+						- github - atom april 2013
+							- cheng zhao - atom shell
+							- atom shell becomes electron april 2015
+
+							[Technical Differences](https://github.com/electron/electron/blob/master/docs/development/atom-shell-vs-node-webkit.md)
+
+							[patch node0.12 (multicontext)](https://strongloop.com/strongblog/whats-new-node-js-v0-12-multiple-context-execution/)
+
+					</script>
+
+				</section>
+				<section>
+					<img class="plain" style="width:1000px" src="images/electron.png" alt="">
+					<div class="main-box">
+						<img class="plain" style="width:100px" src="images/v8.png" alt="">
+						<img class="plain" style="width:100px" src="images/chromium-logo.png" alt="">
+						<img class="plain" style="width:100px" src="images/nodejs-logo.png" alt="">
+					</div>
+
+				</section>
+
+				<section>
+					<h3>What is Electron?</h3>
+					<p>Open Source Tool for building cross-platform native apps using web technologies</p>
+						<div class="box atom-green">
+							Javascript, HTML, CSS
+						</div>
+						<div class="box electron-blue">
+							Electron
+							<div class="box blue">
+								NodeJS
+							</div>
+							<div class="box blue">
+								Chromium
+							</div>
+						</div>
+						<div class="box os-yellow">
+							Operating System
+						</div>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## What makes it so awesome?
+
+						- web technology (html, css, js)
+						- latest and greatest (all the chrome awesomeness)
+						- modules (all of nodejs apis)
+						- automatic updates (using squirrel)
+						- one browser (design once)
+						- three platforms (win, mac, linux)
+					</script>
+
+				</section>
+
+				<section>
+					<div class="box-50 electron-blue">
+						<h3>Main </h3>
+						<p>(application lifecycle)</p>
+						<ul>
+							<li>Node.js</li>
+							<li>BrowserWindow</li>
+							<li>menu</li>
+							<li>dialog</li>
+							<li>ipc</li>
+						</ul>
+
+					</div>
+					<div class="box-50 atom-green">
+						<h3>Renderer</h3>
+						<p>(web page)</p>
+						<ul>
+							<li>Node.js</li>
+							<li>DOM</li>
+							<li>remove</li>
+							<li>webframe</li>
+							<li>ipc</li>
+						</ul>
+					</div>
+				</section>
+				<section>
+					<h2>How its put together</h2>
+					<img class="plain" style="width:800px" src="images/structure.png" alt="">
+				</section>
+				<section>
+					<img class="plain" style="width:800px" src="images/process1.png" alt="">
+				</section>
+				<section>
+					<img class="plain" style="width:800px" src="images/process2.png" alt="">
+				</section>
+				<section>
+					<img class="plain" style="width:800px" src="images/process3.png" alt="">
+				</section>
+				<section>
+					<img class="plain" style="width:800px" src="images/process4.png" alt="">
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## So what does that look like in code?
+					</script>
+				</section>
+				<section>
+					Minimal main process code - `main.js`
+					<pre>
+						<code data-trim data-noescape>
+const { app, BrowserWindow } = require('electron')
+
+let mainWindow = null
+
+app.on('ready', () => {
+	mainWindow = new BrowserWindow({width: 800 ,height: 600})
+	mainWindow.loadURL(`file://${__dirname}/index.html`)
+	mainWindow.on('closed', () => {
+		mainWindow = null
+	})
+})
+					</code>
+				</pre>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						# Node is also in the renderer process
+					</script>
+				</section>
+				<section>
+					<section>
+						Lets look at this code...
+						<pre>
+							<code data-trim data-noescape>
+window.onload = function () {
+  var fs = require('fs')
+  var p = document.createElement('p')
+
+  p.textContent = fs.readFileSync('kittens.txt')
+  document.body.appendChild(p)
+}
+						</code>
+					</pre>
+					</section>
+					<section>
+						wait, aren't we in a browser? WTF?!
+						<pre>
+							<code data-trim data-noescape>
+window.onload = function () {
+  var fs = <mark>require('fs')</mark> // WTF?
+  var p = document.createElement('p')
+
+  p.textContent = <mark>fs.readFileSync('kittens.txt')</mark> // WTF?
+  document.body.appendChild(p)
+}
+						</code>
+					</pre>
+					</section>
+					<section>
+						and we can use es6 syntax..
+						<pre>
+							<code data-trim data-noescape>
+window.onload = () => {
+  const fs = require('fs')
+  const p = document.createElement('p')
+
+  p.textContent = fs.readFileSync('kittens.txt')
+  document.body.appendChild(p)
+}
+						</code>
+					</pre>
+					</section>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						# What has been made with Electron?
+					</script>
+
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### Electron Based Text Editors
+
+						- [Github Atom](https://atom.io)
+						- [Microsoft Visual Studio Code](https://code.visualstudio.com/)
+						- [Facebook Nuclide](http://nuclide.io/)
+					</script>
+
+				</section>
+				<section data-background="images/jibo.png"></section>
+				<section data-background="images/slack.png"></section>
+				<section data-background="images/nylas.png"></section>
+				<section data-markdown>
+					<script type="text/template">
+						# Alright, its peanut butter demo time
+						![](images/pbjt.gif)
+					</script>
+
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						# Resources
+
+						- [Awesome Electron](https://github.com/sindresorhus/awesome-electron)
+						- [The Docs](http://electron.atom.io/)
+						- [Sample Apps](https://github.com/hokein/electron-sample-apps)
+					</script>
+
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() {return true}, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
